@@ -35,6 +35,7 @@ export const Dashboard = () => {
 
   return (
     <>
+    
     <HeaderDashboard/>
       <Table withBorder>
         <thead>

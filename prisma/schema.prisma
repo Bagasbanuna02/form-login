@@ -11,5 +11,18 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Barang {
+  id         String   @id @default(cuid())
+  namaBarang String
+  harga      Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }

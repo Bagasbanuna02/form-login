@@ -23,7 +23,7 @@ import React, { useState } from "react";
 const listNavbar = [
   {
     id: 1,
-    name: "Table 1",
+    name: "Table Barang",
     view: TableSatu,
     href: "/dashboard/table-satu",
   },
@@ -143,6 +143,7 @@ export default function DashboardLayout({
               </Navbar>
             }
           >
+            <pre></pre>
             {children}
           </AppShell>
         </div>

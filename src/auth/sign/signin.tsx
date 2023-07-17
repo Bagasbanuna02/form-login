@@ -64,24 +64,24 @@ const SignIn = () => {
           align={"center"}
           h={100 + "vh"}
         >
-          <Paper bg={"gray"} p={30} radius={30}>
+          <Paper bg={"gray"} p={30} radius={30} w={300}>
             <Center>
               <Title order={3}>Login</Title>
             </Center>
             <TextInput
-              label="username"
+              label="Username"
               onChange={(val) => {
                 formLogin.values.data.username = val.target.value;
               }}
             />
             <TextInput
-              label="email"
+              label="Email"
               onChange={(val) => {
                 formLogin.values.data.email = val.target.value;
               }}
             />
             <PasswordInput
-              label="password"
+              label="Password"
               onChange={(val) => {
                 formLogin.values.data.password = val.target.value;
               }}

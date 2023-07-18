@@ -10,6 +10,7 @@ import {
   MediaQuery,
   NavLink,
   Navbar,
+  Space,
   Table,
   Text,
   Title,
@@ -35,8 +36,8 @@ export const Dashboard = () => {
 
   return (
     <>
-    
     <HeaderDashboard/>
+    <Space h={20}/>
       <Table withBorder>
         <thead>
           <tr>

@@ -8,8 +8,11 @@ import {
   Group,
   Paper,
   PasswordInput,
+  Stack,
+  Text,
   TextInput,
   Title,
+  createStyles,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Link from "next/link";
@@ -17,46 +20,51 @@ import _, { isEmpty } from "lodash";
 import toast from "react-simple-toasts";
 import { useRouter } from "next/navigation";
 
+const useStyles = createStyles((theme: any) => ({
+  myCustomStyles: {
+    ...theme.fn.radialGradient("blue", "red", "orange", "cyan", "white"),
+  },
+}));
+
 const SignIn = () => {
   const router = useRouter();
   const formLogin = useForm({
     initialValues: {
       data: {
-        username: "",
+        // username: "",
         email: "",
         password: "",
       },
     },
   });
 
-  function loginButton() {
-    //  console.log(formLogin.values.data)
-    // if (localStorage.getItem("token") == null) {
-    //   toast("Registrasi Dulu");
-    // } else 
-    if (
-      formLogin.values.data.username != localStorage.getItem("username")
-    ) {
-      toast("Username Salah");
-    } else if (formLogin.values.data.email != localStorage.getItem("email")) {
-      toast("Email Salah");
-    } else if (
-      formLogin.values.data.password != localStorage.getItem("password")
-    ) {
-      toast("Password Salah");
-    } else {
-      toast("SELAMAT LOGIN");
-      router.push("/dashboard");
+  async function loginButton() {
+    const body = formLogin.values.data;
+    // console.log(formLogin.values.data);
+    if (Object.values(formLogin.values.data).includes("")) {
+      toast("Lengkapi Data");
     }
+
+    await fetch(`/api/auth/signin/post`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then(async (val) => {
+        if (val.status == 200) {
+          toast(val.message);
+          router.push("/dashboard");
+        } else {
+          toast(val.message);
+        }
+      });
   }
 
   return (
     <>
-      {/* {JSON.stringify(localStorage.getItem("username"))}
-      {JSON.stringify(localStorage.getItem("email"))}
-      {JSON.stringify(localStorage.getItem("password"))}
-      {JSON.stringify(localStorage.getItem("token"))} */}
-
       <Box>
         <Flex
           direction={"column"}
@@ -64,39 +72,46 @@ const SignIn = () => {
           align={"center"}
           h={100 + "vh"}
         >
-          <Paper bg={"gray"} p={30} radius={30}>
-            <Center>
-              <Title order={3}>Login</Title>
-            </Center>
-            <TextInput
-              label="username"
-              onChange={(val) => {
-                formLogin.values.data.username = val.target.value;
-              }}
-            />
-            <TextInput
-              label="email"
-              onChange={(val) => {
-                formLogin.values.data.email = val.target.value;
-              }}
-            />
-            <PasswordInput
-              label="password"
-              onChange={(val) => {
-                formLogin.values.data.password = val.target.value;
-              }}
-            />
-            <Group position="center">
-              <Button
-                my={10}
-                onClick={() => {
-                  loginButton();
+          <Paper bg={"gray.3"} p={30} radius={30} w={300}>
+            <Stack>
+              <Center>
+                <Title order={3}>Login</Title>
+              </Center>
+              <TextInput
+                // label="Email atau"
+                placeholder="Email / Username"
+                onChange={(val) => {
+                  formLogin.values.data.email = val.target.value;
                 }}
-              >
-                Login
-              </Button>
-            </Group>
-            <Link href={"/auth/signup"}>register</Link>
+              />
+              <PasswordInput
+                placeholder="Password"
+                onChange={(val) => {
+                  formLogin.values.data.password = val.target.value;
+                }}
+              />
+              <Flex justify="center" direction={"column"} align={"center"}>
+                <Button
+                  color="blue.4"
+                  onClick={() => {
+                    loginButton();
+                  }}
+                >
+                  Login
+                </Button>
+                <Link
+                  href={"/auth/signup"}
+                  style={{
+                    textDecorationLine: "none",
+                    textDecorationColor: "GrayText",
+                  }}
+                >
+                  <Text mt={20} fz={12}>
+                    Registrasi ?
+                  </Text>
+                </Link>
+              </Flex>
+            </Stack>
           </Paper>
         </Flex>
       </Box>

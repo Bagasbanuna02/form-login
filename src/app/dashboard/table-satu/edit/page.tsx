@@ -1,4 +1,4 @@
-import { EditBarang } from "@/dashboard";
+import { EditBarang } from "@/modules/dashboard";
 
 export default function Page() {
   return (

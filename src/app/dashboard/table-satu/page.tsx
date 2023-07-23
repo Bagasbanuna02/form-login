@@ -1,4 +1,4 @@
-import { TableSatu } from "@/dashboard";
+import { TableSatu } from "@/modules/dashboard";
 
 export default function Page() {
   return (

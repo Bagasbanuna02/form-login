@@ -1,5 +1,5 @@
 "use client";
-import { TableDua, TableSatu } from "@/dashboard";
+import { Logout, TableDua, TableSatu } from "@/modules/dashboard";
 import {
   AppShell,
   Burger,
@@ -16,6 +16,8 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
+import { useShallowEffect } from "@mantine/hooks";
+import { upperCase } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -43,6 +45,12 @@ export default function DashboardLayout({
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const router = useRouter();
+  const [username, setUsername] = useState<any>("")
+
+  useShallowEffect(() => {
+  setUsername(localStorage.getItem("username"))
+
+  },[])
 
   return (
     <>
@@ -111,7 +119,7 @@ export default function DashboardLayout({
                     }}
                   >
                     BIP
-                    <Text fz={10}>Bali Interaktif Perkasa</Text>
+                    <Text fz={10}>Bali Interaktif Perkasa, Welcome {`${upperCase(username)}`} </Text>
                   </Text>
                 </Navbar.Section>
                 <Navbar.Section grow mt={"md"}>
@@ -127,17 +135,7 @@ export default function DashboardLayout({
                 </Navbar.Section>
                 <Navbar.Section>
                   <Group position="center">
-                    <Button
-                      compact
-                      radius={50}
-                      bg={"red"}
-                      color="red.4"
-                      onClick={() => {
-                        router.push("/");
-                      }}
-                    >
-                      Logout
-                    </Button>
+                    <Logout/>
                   </Group>
                 </Navbar.Section>
               </Navbar>

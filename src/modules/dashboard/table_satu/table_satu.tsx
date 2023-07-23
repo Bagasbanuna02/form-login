@@ -6,6 +6,7 @@ import { keys } from "lodash";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-simple-toasts";
+import { loadDataBarang } from "./fun_load";
 
 export const TableSatu = () => {
   const router = useRouter();
@@ -16,13 +17,12 @@ export const TableSatu = () => {
   }, []);
 
   const loadBarang = async () => {
-    await fetch("/api/barang/get")
-      .then((res) => res.json())
-      .then(setBarang);
+    const listData = await loadDataBarang();
+    setBarang(listData);
   };
 
   const onDelete = async (id: string) => {
-    console.log(id);
+    // console.log(id);
     await fetch(`/api/barang/delete?id=${id}`, {
       method: "DELETE",
       headers: {
@@ -39,8 +39,9 @@ export const TableSatu = () => {
   return (
     <>
       {/* {JSON.stringify(barang)} */}
+
       <Box>
-        <Title order={3}>Table Barang</Title>
+        <Title order={3}>Table Barang 2</Title>
         <Button
           onClick={() => {
             router.push("/dashboard/table-satu/tambah");
@@ -63,23 +64,23 @@ export const TableSatu = () => {
                 <td>{e.harga}</td>
                 <td>
                   <Flex gap={"md"}>
-                  <Button
-                    color="green"
-                    onClick={() => {
-                      router.push("/dashboard/table-satu/edit");
-                      localStorage.setItem("id_barang", e.id);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    color="red"
-                    onClick={() => {
-                      onDelete(e.id);
-                    }}
-                  >
-                    Hapus
-                  </Button>
+                    <Button
+                      color="green"
+                      onClick={() => {
+                        router.push("/dashboard/table-satu/edit");
+                        localStorage.setItem("id_barang", e.id);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      color="red"
+                      onClick={() => {
+                        onDelete(e.id);
+                      }}
+                    >
+                      Hapus
+                    </Button>
                   </Flex>
                 </td>
               </tr>

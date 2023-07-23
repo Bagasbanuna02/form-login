@@ -28,29 +28,41 @@ import { useHookstate } from "@hookstate/core";
 import { sSelectPage } from "./state";
 import { useShallowEffect } from "@mantine/hooks";
 import HeaderDashboard from "./header_dashboard";
+import { cookies } from "next/dist/client/components/headers";
+import { loadDataDashboard } from "./fun_load_dashboard";
 
 export const Dashboard = () => {
   const router = useRouter();
   const theme = useMantineTheme();
-  const [opened, setOpened] = useState(false);
+  const [user, setUser] = useState<any[]>([]);
 
+  useShallowEffect(() => {
+    loadDataUser();
+  }, []);
+
+  async function loadDataUser() {
+   const data = await loadDataDashboard()
+   setUser(data)
+  }
   return (
     <>
-    <HeaderDashboard/>
-    <Space h={20}/>
+    {/* {JSON.stringify(user)} */}
+      <HeaderDashboard />
+      <Space h={20} />
       <Table withBorder>
         <thead>
           <tr>
             <th>Nama</th>
-            <th>Jabatan</th>
+            <th>Email</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Apa</td>
-            <td>Apa</td>
-
-          </tr>
+         {user.map((e, i) => (
+           <tr key={e.id}>
+           <td>{e.username}</td>
+           <td>{e.email}</td>
+         </tr>
+         ))}
         </tbody>
       </Table>
     </>

@@ -1,6 +1,6 @@
 
 import { Test } from "./test-component";
-import App from "@/home";
+import App from "@/modules/home";
 
 export default function Page() {
   return (

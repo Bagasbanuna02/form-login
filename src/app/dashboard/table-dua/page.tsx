@@ -1,4 +1,4 @@
-import { TableDua } from "@/dashboard";
+import { TableDua } from "@/modules/dashboard";
 
 export default function Page() {
   return (

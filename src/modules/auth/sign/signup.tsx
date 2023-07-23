@@ -110,7 +110,8 @@ const SignUp = () => {
               }}
             />
 
-            <Button
+           <Flex direction={"column"}>
+           <Button
               type="submit"
               my={10}
               onClick={() => {
@@ -122,6 +123,8 @@ const SignUp = () => {
             >
               Sign Up
             </Button>
+            <Link href={"./signin"} style={{textDecorationLine: "none"}}>Saya sudah ada akun!</Link>
+           </Flex>
           </Paper>
         </Flex>
       </Box>

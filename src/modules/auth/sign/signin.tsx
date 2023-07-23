@@ -63,6 +63,32 @@ const SignIn = () => {
       });
   }
 
+  async function customLogin() {
+    const body = formLogin.values.data;
+
+    if (Object.values(formLogin.values.data).includes("")) {
+      toast("Lengkapi Data");
+    } else {
+      await fetch(`/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.json())
+        .then(async (val) => {
+          if (val.status === 200) {
+            router.push("/dashboard");
+            toast("Berhasil Login");
+            localStorage.setItem("username",val.data.username);
+          } else {
+            toast(val.message);
+          }
+        });
+    }
+  }
+
   return (
     <>
       <Box>
@@ -94,7 +120,8 @@ const SignIn = () => {
                 <Button
                   color="blue.4"
                   onClick={() => {
-                    loginButton();
+                    // loginButton();
+                    customLogin();
                   }}
                 >
                   Login
